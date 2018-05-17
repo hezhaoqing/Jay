@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-name = input()
+name = input("please input your name:")
 print('Hello,', name)
