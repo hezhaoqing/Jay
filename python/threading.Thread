@@ -1,9 +1,19 @@
-Python Thread类表示在单独的控制线程中运行的活动。有两种方法可以指定这种活动：
+Python Thread类表示在单独的控制线程中运行的活动。在python里面，线程的创建有两种方式：
 
-1、给构造函数传递回调对象
 
-mthread=threading.Thread(target=xxxx,args=(xxxx))
-mthread.start()
+1.使用Thread类创建：
+
+# 导入Python标准库中的Thread模块 
+from threading import Thread 
+# 创建一个线程 
+mthread = threading.Thread(target=function_name, args=(function_parameter1, function_parameterN)) 
+# 启动刚刚创建的线程 
+mthread .start()
+
+function_name: 需要线程去执行的方法名
+args: 线程执行方法接收的参数，该属性是一个元组，如果只有一个参数也需要在末尾加逗号。
+
+
 
 
 2、在子类中重写run() 方法
