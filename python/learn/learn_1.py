@@ -6,7 +6,7 @@ import platform
 import time
 import random
 from file import *                                  		       	  ###### 从某文件导入。比如在某个文件定义一些字典。
-from threading import Thread                    		  	  ###### 线程. 从模块导入类。
+from threading import Thread                    		  	  ###### 线程. 从模块导入类。用法见learn_2.py
 import sys
 
 
