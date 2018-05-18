@@ -10,7 +10,7 @@ import time
 
 def threaddo(hostip):                                                                               ###### 定义带参数的函数
 	ansibledo = "ansible %s -m shell -a \" rm -rf  /opt/hezhaoqing \"     "      % (hostip)
-	print(ansibledo)	
+	print(ansibledo)
 	os.system(ansibledo)                                                                            ###### 把打印的命令交给命令行执行
 
 	
