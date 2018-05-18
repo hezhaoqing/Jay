@@ -8,7 +8,7 @@ import sys
 import time
 
 
-def threaddo(hostip):						                                  						###### 定义带参数的函数
+def threaddo(hostip):							   		            ###### 定义带参数的函数
 	ansibledo = "ansible %s -m shell -a \" rm -rf  /opt/hezhaoqing \"     "      % (hostip)
 	print(ansibledo)	
 	os.system(ansibledo)
@@ -21,10 +21,10 @@ def main():
     th1 = Thread(target=threaddo,args=(gameserverip,))                                              ###### 定义两个线程
     th2 = Thread(target=threaddo,args=(dbserverip,))
 
-    th1.start()											  											###### 开始线程
+    th1.start()											    ###### 开始线程
     th2.start()
 
-    th1.join()																						###### 	
+    th1.join()                                                                                      ###### 阻塞下面的进程 直到上面结束再调用
     th2.join()	
     
 	ansibledo1 = "ansible %s -m shell -a \" su - %s -c ' cd /home/%s/; bash do.sh allb ' \"     "     % (dbserverip, userid, userid)
