@@ -5,8 +5,8 @@ import os
 import platform
 import time
 import random
-from file import *                                  		       	  ###### 从某文件导入。比如在某个文件定义一些字典。
-from threading import Thread                    		  	  ###### 线程. 从模块导入类。用法见learn_2.py
+from file import *                                  		       	 ###### 从某文件导入。比如在某个文件定义一些字典。
+from threading import Thread                    		  	 ###### 线程. 从模块导入类。用法见learn_2.py
 import sys
 
 
@@ -25,8 +25,12 @@ def main():								 ###### 定义一个没有参数的函数
 	
 	print(info['host']['gameserver']['userid'])                      ###### 取嵌套字典的某个value : 字典名[key][key][key][key].
 	
-	print (myargv)
+	print(myargv)
 
+	for (userid,hostip) in info['host']['gameserver'].items():       ###### 用for循环取字典中的键值对 .items()。
+		print("userid: " + userid + ", hostip: " + hostip)
+	
+	
 
 if __name__ == "__main__":                                               ###### 被调用不执行，被直接执行才执行。
 
