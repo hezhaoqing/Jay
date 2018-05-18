@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf_8 -*-
 
@@ -9,8 +8,7 @@ import sys
 import time
 
 
-
-def threaddo(hostip):						                                                     	 ###### 定义带参数的函数
+def threaddo(hostip):						                                  						###### 定义带参数的函数
 	ansibledo = "ansible %s -m shell -a \" rm -rf  /opt/hezhaoqing \"     "      % (hostip)
 	print(ansibledo)	
 	os.system(ansibledo)
@@ -23,17 +21,24 @@ def main():
     th1 = Thread(target=threaddo,args=(gameserverip,))                                              ###### 定义两个线程
     th2 = Thread(target=threaddo,args=(dbserverip,))
 
-    th1.start()
+    th1.start()											  											###### 开始线程
     th2.start()
 
-    th1.join()
-    th2.join()
-
+    th1.join()																						###### 	
+    th2.join()	
+    
+	ansibledo1 = "ansible %s -m shell -a \" su - %s -c ' cd /home/%s/; bash do.sh allb ' \"     "     % (dbserverip, userid, userid)
+    print(ansibledo1)
+    os.system(ansibledo1)
 
     time.sleep(5)
+
+    ansibledo2 = "ansible %s -m shell -a \" su - %s -c ' cd /home/%s/; bash do.sh alla  ' \"     "    % (gameserverip, userid, userid)
+    print(ansibledo2)
+    os.system(ansibledo2)
 	
     
 if __name__=="__main__":
-    userid = sys.argv[1]                                                                          ##### sys 取脚本第一个参数
+    userid = sys.argv[1]                                                                            ###### sys 取脚本第一个参数
     main()
 	
