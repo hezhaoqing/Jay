@@ -1,0 +1,30 @@
+#!/bin/env python
+# -*- coding: utf_8 -*-
+
+#### 停服开服脚本，同一模板。
+#### 此脚本为 stop gameserver。
+
+from  conf import *
+from threading import Thread
+import os
+
+
+#print info['host']['dbserver']['a_mix_02']
+
+
+def threaddo(hostip,userid):
+        ansibledo = "ansible %s -m shell -a \" su - %s -c ' cd /home/%s/; bash do.sh stop  ' \"     "           % (hostip, userid, userid)
+        print ansibledo
+
+        os.system(ansibledo)
+
+def main():
+        for (userid,hostip) in info['host']['gameserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid))
+                userid.start()
+
+
+if __name__=="__main__":
+        main()
