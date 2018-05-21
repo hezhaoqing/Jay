@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+# -*- coding: utf_8 -*-
+
+##### 通过命令行传参数，执行某些命令。
+
+from  conf import *
+import os
+import sys
+
+
+def main():
+        servertype = sys.argv[1]
+        userid = sys.argv[2]
+        #print servertype 
+
+        ip = info['host'][servertype][userid]
+
+        print "ssh to %s %s %s" % (servertype, userid, ip)
+
+        dossh = "ssh %s" %ip
+        #print dossh
+        os.system(dossh)
+
+if __name__=="__main__":
+        main()
+
+        
+        
+        
+        
+        
+        
+
+#!/bin/env python
+# -*- coding: utf_8 -*-
+
+from  conf import *
+from threading import Thread
+import os
+import sys
+
+#print info['host']['dbserver']['a_mix_02']
+
+
+
+def threaddo(hostip,userid,filename):
+        ansibledo = "ansible %s -m shell -a \" ls -lih /home/%s/%s \"    "      % (hostip, userid, filename)
+        print ansibledo
+
+        os.system(ansibledo)
+
+def main():
+        for (userid,hostip) in info['host'][servertype].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid,filename))
+                userid.start()
+
+if __name__=="__main__":
+        servertype = sys.argv[1]
+        filename = sys.argv[2]
+        main()
+
+~                        
