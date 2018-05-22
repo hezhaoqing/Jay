@@ -12,5 +12,5 @@ ds=list(os.listdir('.'))
 for d in ds:
 	if os.path.isdir(d):
 		shutil.rmtree(d)
-  else:
-    os.remove(d)
+	else:
+		os.remove(d)
