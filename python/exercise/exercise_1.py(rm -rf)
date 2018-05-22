@@ -1,0 +1,16 @@
+#!/bin/env python
+#-*- coding:uft-8 -*-
+
+import os,shutil
+
+print (os.getcwd())
+
+os.chdir('/opt/hzq')
+
+ds=list(os.listdir('.'))
+
+for d in ds:
+	if os.path.isdir(d):
+		shutil.rmtree(d)
+  else:
+    os.remove(d)
