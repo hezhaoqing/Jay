@@ -15,12 +15,11 @@ for d in ds: #遍历该列表，d为3元素元组
 ############
 
 
-
-
-
-
-
-
+也可以这样写：
+for a,b,c in ds:
+    for x in c:
+        print x
+上面代码里的进入父目录以及判断文件是否存在，两行是可以省略的。测试过
 
 walk 效果：
 [root@10-10-74-184 opt]# python walk.py 
