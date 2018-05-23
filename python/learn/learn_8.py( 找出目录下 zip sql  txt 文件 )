@@ -1,0 +1,12 @@
+#!/bin/env python
+
+import os
+
+def main(name,*types):  
+    for root,dirs,files in os.walk(name):  
+        for f in files:  
+            if os.path.isfile(os.path.join(root,f)) and os.path.splitext(f)[1][1:] in types:  
+                print os.path.join(root,f)  
+  
+if __name__ == '__main__':  
+    main("/opt","sql","zip","txt")
