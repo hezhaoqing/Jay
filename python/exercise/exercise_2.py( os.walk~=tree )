@@ -1,0 +1,68 @@
+
+os.walk 的使用
+
+
+############
+#!/bin/env python
+import os
+ds = list(os.walk('/opt')) #获得列表，列表的元素为x个3元素元组
+
+for d in ds: #遍历该列表，d为3元素元组
+    os.chdir(d[0]) #进入本级路径
+    if d[2] != []: #说明该路径下有文件
+        for x in d[2]: #遍历这些文件
+            print x    # 打印。。。至此，可以打印出 /opt下的所有文件（包括各子目录的文件）
+############
+
+
+
+
+
+
+
+
+
+walk 效果：
+[root@10-10-74-184 opt]# python walk.py 
+learn.py
+walk.py
+conf.pyc
+conf.py
+rm.py
+2
+4
+5
+3
+1
+b
+a
+c
+e
+d
+
+tree 效果：           
+[root@10-10-74-184 opt]# tree /opt/
+/opt/
+├── conf.py
+├── conf.pyc
+├── hzq
+│   ├── 1
+│   ├── 2
+│   ├── 3
+│   ├── 4
+│   ├── 5
+│   └── j
+│       └── q
+│           ├── a
+│           ├── b
+│           ├── c
+│           ├── d
+│           └── e
+├── learn.py
+├── rm.py
+└── walk.py
+            
+            
+            
+            
+            
