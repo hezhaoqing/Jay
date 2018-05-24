@@ -1,5 +1,6 @@
-#!/bin/env python
+一。找出/opt下，所有的sql  zip  txt 文件并打印绝对路径。
 
+#!/bin/env python
 import os
 
 def main(name,*types):  
@@ -9,10 +10,9 @@ def main(name,*types):
                 print os.path.join(root,f)  
   
 if __name__ == '__main__':  
-    main("/opt","sql","zip","txt")
-
-    
-********************************************************************************************************
+    main("/opt","sql","zip","txt")  
+*******************************************************************************************************************
+二。同一，加入线程。查看线程执行时间。
 
 #!/bin/env python
 
@@ -33,4 +33,25 @@ if __name__ == '__main__':
     t.join()
     
     print(time.time()-t1)
-    
+*******************************************************************************************************************
+三。找出 /opt下 所有的 sh txt 文件
+
+[root@10-10-74-184 opt]# cat wwwalk.py 
+#!/bin/env python
+
+import os  
+  
+def getfile(path):  
+  
+    for root,dirs,f in os.walk(path):  
+  
+        for i in f :  
+            if i.split('.')[-1] in ('sh','txt'):  
+                  
+                print os.path.join(root,i)  
+
+if __name__ == "__main__":
+
+	getfile('/opt')
+
+*******************************************************************************************************************
