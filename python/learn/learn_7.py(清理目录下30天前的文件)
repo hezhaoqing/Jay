@@ -9,9 +9,58 @@ del = datetime.timedelta(days=30) #设定30天前的文件为过期
 now = datetime.datetime.now() #获取当前时间
 
 for d in ds: #遍历该列表
-    os.chdir(d[0]) #进入本级路径        ###### 1
-    if d[2] != []: #如果该路径下有文件   ###### 2 本以为 这两行是可以省略掉的。实践证明，省去的话 会报错，报找不到该文件。不能省略
+    os.chdir(d[0]) #进入本级路径        ###### 1 本以为这两行是可以省略掉的。实践证明，第一行如果省去的话 会报错，报找不到该文件。
+    if d[2] != []: #如果该路径下有文件   ###### 2 第二行好像可以省去
         for x in d[2]: #遍历这些文件
             ctime = datetime.datetime.fromtimestamp(os.path.getctime(x)) #获取文件创建时间
             if ctime < (now-del): #若创建于delta天前
                 os.remove(x) #则删掉
+
+
+
+
+
+实例：
+
+[root@10-8-25-35 shellscripts]# cat clean_nginx_log.py 
+#!/bin/env python
+#-*- coding:utf-8 -*-
+import time
+import os
+import datetime
+
+now=datetime.datetime.now()
+ago=datetime.timedelta(days=30)
+
+for root,dirs,files in os.walk('/data/nginx/logs'):
+	#os.chdir(root)                                                     ####注释掉切换目录执行
+	for f in files:
+		ctime = datetime.datetime.fromtimestamp(os.stat(f).st_ctime)
+		if ctime < (now-ago):
+			print f
+结果报错：
+[root@10-8-25-35 shellscripts]# python clean_nginx_log.py 
+Traceback (most recent call last):
+  File "clean_nginx_log.py", line 33, in <module>
+    ctime = datetime.datetime.fromtimestamp(os.stat(f).st_ctime)
+OSError: [Errno 2] No such file or directory: 'subapi.access.2018-05-01.log'
+
+取消注释执行结果：
+[root@10-8-25-35 shellscripts]# python clean_nginx_log.py 
+access.log
+subapi.access.2018-04-19.log
+subapi.access.2018-04-14.log
+subapi.access.2018-04-10.log
+subapi.access.2018-04-22.log
+subapi.access.2018-04-17.log
+subapi.access.2018-04-12.log
+subapi.access.2018-04-18.log
+nginx.pid
+subapi.access.2018-04-11.log
+subapi.access.2018-04-16.log
+subapi.access.2018-04-21.log
+subapi.access.2018-04-20.log
+subapi.access.2018-04-13.log
+subapi.access.2018-04-15.log
+subapi.access.2018-04-23.log
+subapi.access.2018-04-24.log
