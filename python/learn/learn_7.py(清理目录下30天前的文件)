@@ -10,7 +10,7 @@ now = datetime.datetime.now() #获取当前时间
 
 for d in ds: #遍历该列表
     os.chdir(d[0]) #进入本级路径        ###### 1
-    if d[2] != []: #如果该路径下有文件   ###### 2 这两行其实是可以省略掉的。
+    if d[2] != []: #如果该路径下有文件   ###### 2 本以为 这两行是可以省略掉的。实践证明，省去的话 会报错，报找不到该文件。不能省略
         for x in d[2]: #遍历这些文件
             ctime = datetime.datetime.fromtimestamp(os.path.getctime(x)) #获取文件创建时间
             if ctime < (now-del): #若创建于delta天前
