@@ -58,7 +58,7 @@ if __name__ == "__main__":
 四。找出/opt下所有的txt文件
 #!/bin/env python
 
-import os,re  
+import os,re                                                     ##### re是正则表达式 模块。
 p = re.compile('.*?\.txt')  
 f = os.walk(r'/opt') 
 result = []  
