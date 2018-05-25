@@ -1,0 +1,16 @@
+#!/bin/env python
+#-*- coding:utf-8 -*-
+
+import os
+import datetime
+
+now=datetime.datetime.now()
+ago=datetime.timedelta(days=30)
+
+for root,dirs,files in os.walk('/data/nginx/logs'):
+        os.chdir(root)
+        for f in files:
+                ctime = datetime.datetime.fromtimestamp(os.stat(f).st_ctime)
+                if ctime < (now-ago) and f.split('.')[-1] in ('log') and f.split('.')[1] in ('access'):
+                        #print f
+                        os.remove(f)
