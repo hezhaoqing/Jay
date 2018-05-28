@@ -10,8 +10,8 @@ os.path.exists(name):判断是否存在文件或目录name
 os.path.getsize(name):获得文件大小，如果name是目录返回0
 os.path.abspath(name):获得绝对路径
 
-os.path.split(name):分割文件名与目录（事实上，如果你完全使用目录，它也会将最后一个目录作为文件名而分离，同时它不会判断文件或目录是否存在）
-os.path.splitext():分离文件名与扩展名 （同样不会判断文件是否存在）
+os.path.split(name):列表形式分割文件名与目录（事实上，如果你完全使用目录，它也会将最后一个目录作为文件名而分离，同时它不会判断文件或目录是否存在）
+os.path.splitext():列表形式分离文件名与扩展名 （同样不会判断文件是否存在）
 os.path.join(path,name):连接目录与文件名或目录
 os.path.basename(path):返回文件名
 os.path.dirname(path):返回文件路径
