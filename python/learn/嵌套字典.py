@@ -23,5 +23,8 @@ info = {
 
 
 
-for user,ip in info['host']['gameserver'].items()      ### 取字典gameserver中的所有元素
+print(info['host']['gameserver']['i_j_02'])                      ###### 取嵌套字典的某个value : 字典名[key][key][key][key].
+	
 
+for (userid,hostip) in info['host']['gameserver'].items():       ###### 用for循环取字典中的键值对 .items()。
+    print("userid: " + userid + ", hostip: " + hostip)
