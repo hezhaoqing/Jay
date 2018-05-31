@@ -1,0 +1,28 @@
+#!/user/bin/env python
+#coding=UTF8
+ 
+import os
+import fileinput
+import re
+from sys import exit
+logfiles = os.listdir("/var/log/")
+pattern="messages-*\d*"
+msgfiles=[]
+for log in logfiles:
+    if re.match(pattern,log):
+        print log
+        msgfiles.append("/var/log/"+log)
+print(msgfiles)
+while True:
+    find_str = raw_input("please input search key word:")
+    find_str = find_str.strip()
+    print(find_str)
+    if find_str =='':
+        continue
+    elif find_str.lower() =="q" or find_str.lower() =="quit":
+        print('bye bye!')
+        exit(0)
+    else:
+        for line in fileinput.input(msgfiles):
+            if find_str in line:
+                print("filename:%s \nfileline:%s\ncontent:%s" %(fileinput.filename(),fileinput.filelineno(),line))
