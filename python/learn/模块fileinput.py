@@ -1,7 +1,7 @@
 常用函数:
-fileinput.input()       #返回能够用于for循环遍历的对象       ################### 下面的函数基于此函数，此函数要输入文件。
+fileinput.input()       #返回能够用于for循环遍历的对象              ### 下面的函数基于此函数，此函数要输入文件。
 fileinput.filename()    #返回当前文件的名称
-fileinput.lineno()      #返回当前已经读取的行的数量（或者序号）
+fileinput.lineno()      #返回当前已经读取的行的数量（或者序号）       ### 用于批量读入文件时，记录行
 fileinput.filelineno()  #返回当前读取的行的行号
 fileinput.isfirstline() #检查当前行是否是文件的第一行
 fileinput.isstdin()     #判断最后一行是否从stdin中读取
