@@ -1,0 +1,31 @@
+#!/bin/env python
+#coding:utf-8
+
+import fileinput
+import glob
+
+for line in fileinput.input(glob.glob("*.txt")):
+	if fileinput.isfirstline():                                   ### 第一行
+		print '*'*6,'Jjjjj %s' % fileinput.filename(),'*'*6         ### 打印6个* 打印Jjjjj 打印文件名 打印6个*
+	print str(fileinput.lineno()) + ':' + line.upper(),           ### 不把fileinput.lineno()转化为字符串会报错。
+
+
+
+执行结果：
+[root@svn py]# python pi.py 
+****** Jjjjj test2.txt ******
+1:FIRST
+2:SECOND 
+3:THIRD
+4:FOURTH
+****** Jjjjj test.txt ******
+5:A
+6:B
+7:C
+8:D
+9:E
+****** Jjjjj test1.txt ******
+10:1111
+11:2222
+12:3333
+13:4444
