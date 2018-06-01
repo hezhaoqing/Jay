@@ -10,3 +10,4 @@ for i in fileinput.input('./2.json',inplace=1,backup='.back'):
                 print str1.strip()
         else:
                 print i,
+fileinput.close()
