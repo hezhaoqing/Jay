@@ -1,0 +1,14 @@
+#!/bin/env python
+#coding:uft-8
+## usage: python $0 (关键词) (文件名)
+
+import fileinput
+import re
+import sys
+
+
+pattern= re.compile(sys.argv[1])                                              ### 此脚本并不完全相当于grep,只能从头匹配，详见 模块re.py
+for line in fileinput.input(sys.argv[2]):
+	if pattern.match(line):
+		print "%s\n%s\n%s"  %(fileinput.filename(),fileinput.filelineno(),line),
+
