@@ -1,0 +1,12 @@
+#!/bin/env python
+#coding:utf-8
+
+import fileinput
+
+str1=','
+
+for i in fileinput.input('./2.json',inplace=1,backup='.back'):
+        if i.startswith(r'/*'):
+                print str1.strip()
+        else:
+                print i,
