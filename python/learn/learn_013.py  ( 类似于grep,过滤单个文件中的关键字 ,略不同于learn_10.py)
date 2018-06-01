@@ -9,6 +9,6 @@ import sys
 
 pattern= re.compile(sys.argv[1])                                                                  ### 详见 模块re.py
 for line in fileinput.input(sys.argv[2]):
-	if pattern.search(line):                                                                  ### re的几个常见函数    
+	if pattern.search(line):                ### 也可写成 if re.search(pattern,line):           ### re的几个常见函数    
 		print "%s\n%s\n%s"  %(fileinput.filename(),fileinput.filelineno(),line),
 
