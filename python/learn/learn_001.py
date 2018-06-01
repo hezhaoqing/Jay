@@ -37,3 +37,6 @@ if __name__ == "__main__":                                               ###### 
 	myargv= sys.argv[1]						 ###### 定义上面要打印的myargv 为脚本的第一个参数
 	
 	main()
+
+	sys.stdout.write("__over__\n")                                   ###### 系统命令行输出 ___over___
+	
