@@ -45,7 +45,7 @@ def login(func):
     在这里新定义一个高阶函数，
     这就是decorator
     """
-    @functools.wraps(func)	                      ### Python内置的functools.wraps()使 带有装饰器的函数的name属性保持不变
+    @functools.wraps(func)                        ### Python内置的functools.wraps()使 带有装饰器的函数的name属性保持不变
     def wrapper(*args, **kwargs):
         user = "hzq"                              ### 假设这是数据库中的用户名和密码
         passwd = "123"
