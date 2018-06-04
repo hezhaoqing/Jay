@@ -27,6 +27,40 @@ generator 就是 iterator 的一种,以更优雅的方式实现的 iterator 。
 
 3 装饰器
 
+什么是装饰器（Decorator）？
+本质上：是一个返回函数的高阶函数。
+
+生产上，什么时候用装饰器？
+当我们想要给一个函数func()增加某些功能，但又不希望修改func()函数的源代码的时候就需要用装饰器了。（在代码运行期间动态增加功能）
 
 
+装饰器例子：
+[root@svn py]# cat zsq.py 
+#!/bin/env python
+#coding:utf-8
+import functools                                  ### 函数工具模块
 
+def login(func):
+    """
+    在这里新定义一个高阶函数，
+    这就是decorator
+    """
+    @functools.wraps(func)	                      ### Python内置的functools.wraps()使 带有装饰器的函数的name属性保持不变
+    def wrapper(*args, **kwargs):
+        user = "hzq"                              ### 假设这是数据库中的用户名和密码
+        passwd = "123"
+        username = raw_input("输入用户名：")
+        password = raw_input("输入密码：")
+        if username == user and password == passwd:
+            return func(*args, **kwargs)
+        else:
+            print("用户名或密码错误。")
+    return wrapper
+
+
+@login                                            ### 利用python的@语法，把decorator置于home函数的定义处 相当于home = login(home)
+def home():
+    print("欢迎来到XX首页！")
+
+home()
+print(home.__name__)                              ### 不使用functools.wraps()时，home的__name__属性变为了wrapper，使用后仍为home
