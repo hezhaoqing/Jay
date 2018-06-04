@@ -52,8 +52,8 @@ def login(func):
         username = raw_input("输入用户名：")
         password = raw_input("输入密码：")
         if username == user and password == passwd:
-            return func(*args, **kwargs)
-        else:
+            return func(*args, **kwargs)          ### 此处返回home(),因为对于任意函数，
+        else:                                         都可以通过类似func(*args,**kw)的形式调用它，无论它的参数是如何定义的。
             print("用户名或密码错误。")
     return wrapper
 
