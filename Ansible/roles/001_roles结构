@@ -1,0 +1,27 @@
+典型的roles目录结构：
+roles/
+    xxx.yml
+    common/
+        files/
+        templates/
+        tasks/main.yml
+        handlers/main.yml
+        vars/main.yml
+        meta/
+    xxx/
+        files/如脚本或者tar包等等
+        templates/如配置文件等等模板文件
+        tasks/main.yml
+        handlers/main.yml
+        vars/main.yml
+        meta/一些依赖
+ 
+ 
+ 
+在playbook中引用：
+- name: ***
+  hosts: xxx
+  remote_user: root
+  roles:
+    - common
+    - xxx
