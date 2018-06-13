@@ -1,4 +1,24 @@
+---
+- name: Enable nginx repo.
+  template:
+    src: nginx.repo.j2
+    dest: /etc/yum.repos.d/nginx.repo
+    owner: root
+    group: root
+    mode: 0644
+  when: nginx_yum_repo_enabled
+
+- name: Ensure nginx is installed.
+  yum:
+    name: "{{ nginx_package_name }}"
+    state: present
+
 # Nginx setup.
+- name: Define nginx_user.
+  set_fact:
+    nginx_user: "{{ __nginx_user }}"
+  when: nginx_user is not defined
+
 - name: Copy nginx configuration in place.
   template:
     src: "{{ nginx_conf_template }}"
