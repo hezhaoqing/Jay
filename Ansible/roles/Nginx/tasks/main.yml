@@ -13,6 +13,13 @@
     name: "{{ nginx_package_name }}"
     state: present
 
+
+# Vhost configuration.
+- import_tasks: vhosts.yml
+# or
+#- include_tasks: vhosts.yml
+
+
 # Nginx setup.
 - name: Define nginx_user.
   set_fact:
