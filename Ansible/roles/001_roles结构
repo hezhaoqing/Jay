@@ -15,9 +15,9 @@ roles/
         templates/如略有差异的配置文件等等jinja2模板文件
         tasks/main.yml
         handlers/main.yml
-        vars/main.yml
+        vars/main.yml 
         meta/main.yml定义此角色对其它角色的一些依赖
-        default/
+        default/main.yml 定义一些默认变量  也可写在vars/main.yml
     .../
     
     .../
