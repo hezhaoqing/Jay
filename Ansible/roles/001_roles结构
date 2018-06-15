@@ -1,8 +1,16 @@
 1.典型的roles目录结构：
-nginx.yml
-**.yml
-roles/
-    common/
+
+--group_vars/
+        all
+        gameserver
+        dbserver
+--host_vars/
+        host1
+        host2
+--nginx.yml
+--**.yml
+--roles/
+    -common/
         files/
         templates/
         tasks/main.yml
@@ -10,7 +18,7 @@ roles/
         vars/main.yml
         meta/
         default/
-    nginx/
+    -nginx/
         files/如脚本或者tar包等等一些固定的静态文件
         templates/如略有差异的配置文件等等jinja2模板文件
         tasks/main.yml
@@ -18,9 +26,9 @@ roles/
         vars/main.yml 
         meta/main.yml定义此角色对其它角色的一些依赖
         default/main.yml 定义一些默认变量  也可写在vars/main.yml
-    .../
+    -.../
     
-    .../
+    -.../
 
 
 
