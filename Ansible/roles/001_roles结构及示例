@@ -1,0 +1,181 @@
+*********************
+1.典型的roles目录结构：
+*********************
+--group_vars/
+        all
+        gameserver
+        dbserver
+--host_vars/
+        host1
+        host2
+--nginx.yml
+--**.yml
+--roles/
+    -common/
+        files/
+        templates/
+        tasks/main.yml
+        handlers/main.yml
+        vars/main.yml
+        meta/
+        default/
+    -nginx/
+        files/如脚本或者tar包等等一些固定的静态文件
+        templates/如略有差异的配置文件等等jinja2模板文件
+        tasks/main.yml
+        handlers/main.yml
+        vars/main.yml 
+        meta/main.yml定义此角色对其它角色的一些依赖
+        default/main.yml 定义一些默认变量  也可写在vars/main.yml
+    -.../
+    
+    -.../
+
+
+
+
+
+************
+2.创建roles： 
+************
+    首先创建必须的固定目录结构，如：
+    mkdir -pv roles/{nginx,mysql}/{tasks,files,templates,meta,handlers,vars,default}
+    touch roles/{nginx,mysql}/{tasks,meta,handlers,vars}/main.yml
+
+
+
+
+
+************************
+3.roles/nginx.yml中引用：
+************************
+- name: ***install nginx and configure***
+  hosts: xxx
+  remote_user: root
+  roles:
+    - common
+    - Nginx
+
+
+
+
+
+
+
+*****************************************
+4.roles/nginx/templates/nginxjinja2.conf
+*****************************************
+
+
+
+
+
+
+
+*****************************
+5.roles/nginx/tasks/main.yml
+*****************************
+---
+### get_url模块  下载tar包
+- name: download server binaries
+  become: True                                                          ### 可以使用变量{{var}}  定义变量var: true
+  become_user: root
+  get_url:
+    url: '{{_server_tgz_url}}'
+    dest: /tmp/{{_server_tgz}}
+    checksum: '{{_server_checksum}}'
+    mode: 0644
+### unarchive模块  解压
+- name: extract server binaries
+  become: '{{escalate_privilege}}'
+  become_user: root
+  unarchive:
+    src: /tmp/{{_server_tgz}}                                           ### 此处为远端的src，所以需要下面一项
+    dest: '{{_install_path}}'
+    remote_src: yes                                                     ### 表示远端的src
+    creates: '{{_install_path}}/kubernetes/server/bin'                  ### 指定一个文件名，当该文件存在时，则解压指令不执行
+### file模块  修改目录权限
+- name: make binary directory world readable
+  become: '{{escalate_privilege}}'
+  become_user: root
+  with_items:
+    - '{{_install_path}}/kubernetes'
+    - '{{_install_path}}/kubernetes/server'
+    - '{{_install_path}}/kubernetes/server/bin'
+  file:
+    path: '{{item}}'
+    state: directory
+    mode: 0755
+### file模块  修改文件权限
+- name: make binaries world executable
+  become: '{{escalate_privilege}}'
+  become_user: root
+  with_items: '{{binaries.server}}'
+  file:
+    path: '{{_install_path}}/bin/{{item}}'
+    state: file
+    mode: 0755
+### file模块  创建软链接
+- name: link server binaries
+  become: '{{escalate_privilege}}'
+  become_user: root
+  with_items: '{{binaries.server}}'
+  file:
+    src: '{{_install_path}}/kubernets/sbin/{{item}}'
+    dest: '{{_install_dir}}/{{item}}'
+    state: link
+### ？？？
+- name: install runtime dependencies
+  become: '{{escalate_privilege}}'
+  become_user: root
+  with_items: '{{_server_dep_pkgs}}'
+  package:
+    name: '{{item}}'
+    state: present
+### file模块  删除文件
+- name: cleaning up...
+  become: '{{escalate_privilege}}'
+  become_user: root
+  when: kubernetes_cleanup
+  file:
+    path: /tmp/{{_server_tgz}}
+    state: absent
+### 若tasks目录分了多个yml，需要在main.yml中include一下，另一种写法见 import_tasks
+- include_tasks: client.yml
+  when: kubernetes_install_client | default(False)
+- include_tasks: node.yml
+  when: kubernetes_install_node | default(False)
+### 在main.yml中导入一个yml,与include功能相同，个人认为区别是：include支持判断，import则为直接导入
+- import_tasks: server.yml
+### 与tasks相同，有区别的变量也可以在main.yml中 include
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+
+
+
+
+
+
+
+*******************************
+6.roles/nginx/handlers/main.yml
+*******************************
+
+
+
+
+
+
+****************************
+7.roles/nginx/vars/main.yml
+****************************
+
+
+
+
+
+
+******************************
+8.roles/nginx/default/main.yml
+******************************
