@@ -1,0 +1,104 @@
+#!/usr/bin/python
+#coding:utf-8
+import urllib
+import urllib2
+import time
+import hashlib
+import json
+import os
+
+class check_api():
+    def __init__(self,svrid,attrid,start_time,end_time):
+        self.svrid=sys.argv[1]
+        self.attrid=sys.argv[2]
+        self.start_time=sys.argv[3]
+        self.end_time=sys.argv[4]
+        self.base_url="http://10.13.91.29:6001/cgi-bin/query"
+        self.headers={"Content-Type":"text/json"}
+        self.data=json.dumps(data)
+        self.alarm_person=[]
+        #self.alarm_person=["hujie","wzf","agui","wangjz"]
+
+    def create_url(self):
+        path={"appkid":1,"time_beg":self.start_time,"time_end":self.end_time,"attrid":self.attrid,"svrid":svrid}
+        path=urllib.urlencode(path)
+        self.url="%s%s/%s?%s"%(self.base_url,self.bus,self.cmd,path)
+    
+    def get_response(self) :
+        req = urllib2.Request(self.url,self.data,self.headers) 
+        try:
+            response = urllib2.urlopen(req)
+        except Exception as e:
+            print str(e)
+            self.alarm_weixin("==API错误告警==\n"+str(e).replace('<',''))
+            exit(1)
+        self.res = response.read()
+        print self.res
+    def alarm_weixin(self,msg):
+        t=time.strftime("%Y-%m-%d %X", time.localtime())
+        msg=t+" "+self.idc+msg
+        for person in self.alarm_person:
+            os.system("sh /usr/local/agileops/common/weixin.sh %s '%s'" % (person,msg.replace('"','')))        
+        #exit(1)
+
+    def check_res(self):
+        res=json.loads(self.res)
+        if "ErrorCode" in res:
+             if res["ErrorCode"] == 0:
+                 print "ok!!!!"
+             else:
+                 print "Error"
+                 msg="==API错误告警==\n%s接口\n%s"%(self.cmd,self.res)
+                 print self.res
+                 self.alarm_weixin(msg)
+
+    def run(self):
+        self.create_url()
+        start=time.time()
+        self.get_response()
+        end=time.time()
+        cost_time=end-start
+        if cost_time > 4:
+            print cost_time
+            msg="%s cost %d s"%(self.cmd,cost_time)
+            self.alarm_weixin(msg)
+        self.check_res()
+
+
+#ChannelID="2"
+ChannelID="1314"
+UserID="shiyin"
+AnchorID=""
+#AppID=345
+AppID=366
+#Date=time.strftime("%Y%m%d", time.localtime())
+Date="20180411"
+room_cnt=""
+room_list=[]
+member_cnt=""
+check_list=[
+          # {"bus":"im","cmd":"query_anchor_sche","data":{"AnchorID":AnchorID,"ChannelID":ChannelID,"Date":Date}}, 
+          # {"bus":"im","cmd":"query_anchor_info","data":{"UserID":UserID,"AnchorID":AnchorID}}, 
+          # {"bus":"im","cmd":"query_multi_anchor_info","data":{"UserList":[{"UserID":UserID}],"Limit":5}}, 
+          # {"bus":"im","cmd":"query_im_user_score_rank","data":{"UserID":AnchorID,"Date":Date}}, 
+          # {"bus":"im","cmd":"query_im_gift_score","data":{"AnchorID":AnchorID,"StartDate":Date}}, 
+          # {"bus":"im","cmd":"query_im_gift_score_rank","data":{"AnchorID":AnchorID,"StartDate":Date,"Limit":2}}, 
+          # {"bus":"im","cmd":"query_anchor_monitor","data":{"AnchorID":AnchorID,"Date":Date,"NeedActionDetail":1,"ChannelID":ChannelID}}, 
+          # {"bus":"im","cmd":"query_anchor_score_rank","data":{"StartDate":Date,"Limit":3}}, 
+          # {"bus":"im","cmd":"query_talk_channel_user_count","data":{"ChannelID":ChannelID}}, 
+          {"bus":"im","cmd":"get_room_list","data":{"room_cnt":room_cnt,"room_list":[{"member_cnt":member_cnt}]}}, 
+          # {"bus":"im","cmd":"get_talk_user_list_on_a_channel","data":{"ChannelID":ChannelID,"AppID":AppID}}, 
+          # {"bus":"im","cmd":"query_notice","data":{"EnableStatus":1}}, 
+          # {"bus":"im","cmd":"query_im_send_msg","data":{"MsgSeq":1234589,"ChatType":1,"SendID":"apitest3","RecvID":"apitest4", "Content":"this is test"}}, 
+
+
+           ]
+
+for apis in check_list:
+    bus=apis["bus"]
+    cmd=apis["cmd"]
+    data=apis["data"]
+    api=check_api(bus,cmd,data)
+    print cmd+"============="
+    api.run()
+    time.sleep(0.3)
