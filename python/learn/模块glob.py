@@ -1,7 +1,6 @@
 
 功能描述：
 glob模块可以使用Unix shell风格的通配符匹配符合特定格式的文件和文件夹，
-跟windows的文件搜索功能差不多。
 glob模块并非调用一个子shell实现搜索功能，而是在内部调用了os.listdir()和fnmatch.fnmatch()。
 
 
