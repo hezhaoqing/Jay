@@ -1,7 +1,7 @@
+********************
+*      urllib      *
+********************
 urllib模块中的方法:
-
-
-
 
 1.
 urllib.urlopen(url[,data[,proxies]]）
@@ -11,9 +11,15 @@ urlopen 返回对象提供的方法：
 -         info()：返回一个httplib.HTTPMessage对象，表示远程服务器返回的头信息
 -         getcode()：返回Http状态码。
 -         geturl()：返回请求的url
-
-
-
+简单示例：
+import urllib               
+google = urllib.urlopen('http://www.google.com')
+print 'http header:/n', google.info()
+print 'http status:', google.getcode()
+print 'url:', google.geturl()
+for line in google:
+    print line,
+google.close()
 
 2.
 urllib.urlretrieve(url[,filename[,reporthook[,data]]])
@@ -39,13 +45,9 @@ urlretrieve()返回一个二元组(filename,mine_hdrs)
 <httplib.HTTPMessage instance at 0xb6e2c38c>
 
 
-
-
 3.
 urllib.urlcleanup()
 清除由于urllib.urlretrieve()所产生的缓存
-
-
 
 
 4.
@@ -58,15 +60,11 @@ urllib.quote(url)和urllib.quote_plus(url)
 'http%3A%2F%2Fwww.baidu.com'
 
 
-
-
 5.
 urllib.unquote(url)和urllib.unquote_plus(url)
 与4相反。
 
-
-
-
+               
 6.
 urllib.urlencode(query)
 将 键值对 以连接符 & 划分  
@@ -87,6 +85,43 @@ POST:
 >>> f.read()
 
 
+               
+               
+               
 
 
+********************
+*      urllib2     *
+********************
+-          urllib 和urllib2都是接受URL请求的相关模块，
+-          但是urllib2可以接受一个Request类的实例来设置URL请求的headers，
+-          urllib仅可以接受URL，所以不可以伪装你的User Agent字符串等。
+-          urllib提供urlencode方法用来GET查询字符串的产生，而urllib2没有。
+-          这是为何urllib常和urllib2一起使用的原因。
+-          目前的大部分http请求都是通过urllib2来访问的。
 
+示例：
+import urllib
+import urllib2
+url = 'http://www.someserver.com/cgi-bin/register.cgi'
+user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'             # 将user_agent写入头信息
+values = {'name' : 'zhoujielun','password':'123456'}                      # post方式
+headers = { 'User-Agent' : user_agent }
+data = urllib.urlencode(values)
+req = urllib2.Request(url, data, headers)
+response = urllib2.urlopen(req)
+get_page = response.read()
+               
+               
+               
+               
+
+               
+               
+********************
+*      Python3     *
+********************
+urllib库和urilib2库合并成了urllib库。
+其中
+urllib2.urlopen()变成了urllib.request.urlopen()
+urllib2.Request()变成了urllib.request.Request()
