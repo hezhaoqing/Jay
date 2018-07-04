@@ -16,9 +16,9 @@ def login(user,pwd):                                 # 登陆函数，由于md5�
                 return True
 
 def register(user,pwd):                              # 注册函数，注册的时候把用户名和加密的密码写进文件，保存起来。
-    with open('db','a') as f:
-        temp = user+'|'+md5(pwd)
-        f.write(temp)
+    with open('db','a') as f:                        # open()函数，追加模式。
+        record = user+'|'+md5(pwd)
+        f.write(record + '\n')                       # 不加"+ '\n'"的话，db文件不会换行。
 
 i=raw_input('1表示登陆，2表示注册：')
 
