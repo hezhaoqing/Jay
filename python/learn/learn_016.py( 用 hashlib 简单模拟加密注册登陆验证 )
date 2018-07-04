@@ -4,7 +4,7 @@
 import hashlib
 
 def md5(arg):                                        # 加密函数，把传进来的参数加密
-    md5_pwd = hashlib.md5(bytes('abd'))
+    md5_pwd = hashlib.md5(bytes('jay'))
     md5_pwd.update(bytes(arg))
     return md5_pwd.hexdigest()                       # 返回加密的数据
 
