@@ -4,7 +4,8 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。
 
 Json   模块提供了四个方法： dumps、dump、loads、load
 pickle 模块也提供了四个  ：dumps、dump、loads、load
-
+                                       ### 两模块用法相同
+                                       ### 区别是：json模块序列化的数据更通用，picle模块序列化的数据仅python可用，但功能强大，可以序列化函数。
 
 
 1.dumps() 和 dump()
@@ -29,5 +30,5 @@ loads和load 则是反序列化方法
        load  只接收文件描述符，完成了读取文件和反序列化
        
 >>> json.loads('{"name":"Jay", "age":39}')
-{'age': 39, 'name': 'Jay'}            ### python3返回的结果
-{u'age': 39, u'name': u'Jay'}         ### python2返回的结果。经查是编码问题，2的json库会把字符串反序列化为Unicode编码。
+{'age': 39, 'name': 'Jay'}             ### python3返回的结果
+{u'age': 39, u'name': u'Jay'}          ### python2返回的结果。经查是编码问题，2的json库会把字符串反序列化为Unicode编码。
