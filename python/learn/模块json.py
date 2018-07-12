@@ -15,14 +15,20 @@ dumps和dump都是序列化方法
 
 >>> import json
 >>> json.dumps([])                     ### dumps可以格式化所有的基本数据类型为【字符串】
-'[]'
+'[]'                                   ### dumps对中文使用ascii编码方式，通过将【ensure_ascii】参数设置为False可输出中文
 
 a = {"name":"Jay", "age":39}
 with open("test.txt", "w") as f:
-    f.write(json.dumps(a, indent=4))   ### indent，默认为None，小于等于0为零个空格
+    f.write(json.dumps(a, indent=4))   ### 缩进默认为None，【indent】参数可设置json对象的缩进格式，小于等于0为零个空格
     json.dump(a,f,indent=4)            ### 和上面效果一样。dump必须传入f,把a序列化之后写入f.
 
 
+dic = {'b':'I', 'a':123, 'c':'100'}    ### 【separators】参数可设置json对象的分隔符，【sort_keys】参数设置为True时，生成的json对象是按键排序的
+j = json.dumps(dic, sort_keys = True, separators = ('$','@'))
+print (j)                              ### {"a"@123$"b"@"I"$"c"@"100"}
+    
+    
+    
        
 2.loads() 和 load()
 loads和load 则是反序列化方法
