@@ -1,0 +1,79 @@
+#!/bin/env python
+#coding:utf-8
+
+import filecmp
+
+dirobj = filecmp.dircmp("/data/sdyxz/client/test/iOS","/data/sdyxz/client/iOS")
+
+print '两个目录的对比:\n',dirobj.report()
+print '两个目录包含一级子目录的对比:\n',dirobj.report_partial_closure()
+print '两个目录包含所有子目录的对比:\n',dirobj.report_full_closure()
+print '左边目录test/ios下:\n',dirobj.left_list
+print '右边目录ios下:\n',dirobj.right_list
+print '仅仅在左边test/ios下:\n',dirobj.left_only
+print '仅仅在右边ios下:\n',dirobj.right_only
+print '共有的子目录:\n',dirobj.common_dirs
+print '共有的文件:\n',dirobj.common_files
+print '无法比较的目录:\n',dirobj.common_funny
+print '相同的文件:\n',dirobj.same_files
+print '无法比较的文件:\n',dirobj.funny_files
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### '''输出：
+[root@gameupdata pyyyyyyyyyyyy]# python sdyxz.py 
+两个目录的对比:
+diff /data/sdyxz/client/test/iOS /data/sdyxz/client/iOS
+Only in /data/sdyxz/client/test/iOS : ['iOS_246959_248169.zip', 'iOS_248169_249517.zip', 'iOS_249516_250889.zip']
+Identical files : ['patchlist.xml', 'serverlist.xml']
+Common subdirectories : ['Res']
+None
+两个目录包含一级子目录的对比:
+diff /data/sdyxz/client/test/iOS /data/sdyxz/client/iOS
+Only in /data/sdyxz/client/test/iOS : ['iOS_246959_248169.zip', 'iOS_248169_249517.zip', 'iOS_249516_250889.zip']
+Identical files : ['patchlist.xml', 'serverlist.xml']
+Common subdirectories : ['Res']
+
+diff /data/sdyxz/client/test/iOS/Res /data/sdyxz/client/iOS/Res
+Identical files : ['Audio.zip', 'Char.zip', 'Fx.zip', 'SDCG.zip', 'Scenes.zip', 'Tables.zip', 'Texture.zip', 'reslist.xml']
+None
+两个目录包含所有子目录的对比:
+diff /data/sdyxz/client/test/iOS /data/sdyxz/client/iOS
+Only in /data/sdyxz/client/test/iOS : ['iOS_246959_248169.zip', 'iOS_248169_249517.zip', 'iOS_249516_250889.zip']
+Identical files : ['patchlist.xml', 'serverlist.xml']
+Common subdirectories : ['Res']
+
+diff /data/sdyxz/client/test/iOS/Res /data/sdyxz/client/iOS/Res
+Identical files : ['Audio.zip', 'Char.zip', 'Fx.zip', 'SDCG.zip', 'Scenes.zip', 'Tables.zip', 'Texture.zip', 'reslist.xml']
+None
+左边目录test/ios下:
+['Res', 'iOS_246959_248169.zip', 'iOS_248169_249517.zip', 'iOS_249516_250889.zip', 'patchlist.xml', 'serverlist.xml']
+右边目录ios下:
+['Res', 'patchlist.xml', 'serverlist.xml']
+仅仅在左边test/ios下:
+['iOS_246959_248169.zip', 'iOS_248169_249517.zip', 'iOS_249516_250889.zip']
+仅仅在右边ios下:
+[]
+共有的子目录:
+['Res']
+共有的文件:
+['patchlist.xml', 'serverlist.xml']
+无法比较的目录:
+[]
+相同的文件:
+['patchlist.xml', 'serverlist.xml']
+无法比较的文件:
+[]
+'''
