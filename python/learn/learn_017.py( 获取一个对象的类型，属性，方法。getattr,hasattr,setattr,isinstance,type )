@@ -1,0 +1,69 @@
+type()
+判断一个对象类型，使用内建的type()函数
+>>> type(128)
+<class 'int'>
+>>> type('jay')
+<class 'str'>
+如果要判断一个对象是否是函数可以使用types模块中定义的常量：
+>>> import types
+>>> def fn():
+...     pass
+>>> type(fn)==types.FunctionType
+True
+>>> type(abs)==types.BuiltinFunctionType                  ### 内建函数
+True
+>>> type(lambda x: x)==types.LambdaType                   ### 匿名函数
+True
+>>> type((x for x in range(10)))==types.GeneratorType     ### 生成器
+True
+
+
+
+isinstance()
+对于class的继承关系来说，使用type()就很不方便。
+要判断class的类型，可以使用isinstance()函数。
+isinstance（'对象'，'类'）                                     ### 判断一个对象是否属于某个类
+另外，能用type()判断的基本类型也可以用isinstance()判断：
+>>> isinstance('a', str)
+True
+>>> isinstance(123, int)
+True
+
+
+
+dir()
+hasattr()
+getattr()
+setattr()
+如果要获得一个对象的所有属性和方法，使用dir()函数，
+它返回一个包含字符串的list.
+配合getattr()、setattr()以及hasattr()，可以直接操作一个对象的状态
+例：
+class student():
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def print_info(self):
+        print("%s:%s" % (self.name,self.age))
+    def set_info(self,aaggee):
+        self.age=aaggee
+*
+first = student("hzq",30)
+print(first.age)          
+*
+first.set_info(18)
+print(first.age)
+*
+print(getattr(first,"name"))                       ### 获取对象的属性直接用getattr(对象，属性)
+*
+getattr(first,"set_info")(28)                      ### 获取对象的方法需要getattr(对象，方法)(参数)
+print(first.age)
+getattr(first,"print_info")()                      ### 同上，getattr(对象，方法)(无参数也要有括号)
+*
+print(hasattr(first,"age"))                        ### 判断对象是否有某个属性
+print(hasattr(first,"set_info"))                   ### 判断对象是否有某个方法
+*
+setattr(first,'job','yw')                          ### 给对象定义一个新属性
+print(first.job)
+*
+print(dir(first))                                  ### 列表形式列出某对象所有的属性和方法，包含内置属性。
