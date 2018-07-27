@@ -1,4 +1,4 @@
-- name: used to clean the disks of gameservers
+- name: used for gameservers
   hosts: gameserver
   remote_user: root
   gather_facts: false
@@ -24,7 +24,10 @@
     ignore_errors: True
 
   - name: copy the game_script to destination
-    template: src=/data/shellscripts/J/game.sh dest=/data/shellscripts/game.sh
+    copy: src=/data/shellscripts/J/game.sh dest=/data/shellscripts/game.sh mode=0755
+    
+  - name: creat link
+    file: src=/data/shellscripts/game.sh dest=/usr/bin/jaygame state=link
 
 *************************************************************************************************************
 
@@ -55,3 +58,6 @@
 
   - name: copy the db_script to destination
     template: src=/data/shellscripts/J/db.sh dest=/data/shellscripts/db.sh
+
+  - name: creat link
+    file: src=/data/shellscripts/db.sh dest=/usr/bin/jaydb state=link
