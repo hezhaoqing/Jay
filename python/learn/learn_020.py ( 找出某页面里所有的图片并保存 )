@@ -1,0 +1,18 @@
+#!/bin/env python
+#coding:utf-8
+
+import urllib2                                # 导入urllib2模块
+req = urllib2.urlopen('https://l2r.vn/')      # 打开url链接
+buf = req.read()                              
+
+import re                                     # 导入re模块
+listurl = re.findall(r'http.+\.jpg',buf)      # 正则匹配jpg图片格式
+print listurl                                 # 将图片的url格式放入list中
+
+i = 0
+for url in listurl:
+        f = open(str(i)+'.jpg',"wb")          # 打开文件
+        req = urllib2.urlopen(url)
+        buf = req.read()                      # 读出文件
+        f.write(buf)                          # 写入文件
+        i = i + 1
