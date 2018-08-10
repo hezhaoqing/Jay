@@ -1,0 +1,51 @@
+docker官方文档：https://docs.docker.com/install/linux/docker-ce/centos/#install-from-a-package
+docker官方rpm：https://download.docker.com/linux/centos/7/x86_64/stable/Packages/
+docker官方仓库：https://hub.docker.com/
+
+
+概念：
+1.镜像(Image)
+2.容器(Container)
+3.仓库(Registry)
+
+
+安装：
+本次采用rpm方式，选择17.12版本
+# wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-17.12.0.ce-1.el7.centos.x86_64.rpm
+# yum install -y docker-ce-17.12.0.ce-1.el7.centos.x86_64.rpm
+# systemctl start docker
+
+
+常用命令：
+# docker info                             ### 查看docker状态信息
+# docker ps                               ### 查看正在运行的容器的列表
+# docker ps -a                            ### 列出所有容器
+# docker ps -l                            ### 列出最后一次运行的容器
+
+# docker run -i -t ubuntu bash            ### 从镜像创建一个新容器并启动，-t 让Docker分配一个伪终端并绑定到容器的标准输入上，-i 容器的标准输入保持打开开
+# docker start RQid                       ### 启动一个停止的容器。同理有stop、restart。
+
+# docker pull ubuntu:12.04                ### 拉取一个ubuntu镜像，相当于docker pull registry.hub.docker.com/ubuntu:12.04
+# dokcer images                           ### 显示本地已有的所有镜像
+# docker build -t my_image .              ### 制作1个镜像
+        1）vim Dockerfile
+        2）FROM ubuntu
+        3）RUN
+        4）CMD
+# docker tag JXid my_image:latest         ### 为镜像打一个标签
+# docker login --username=yourhubusername --email=yourmail@xxx.com
+# docker push my_image:latest             ### 把制作的镜像推到docker仓库，前提是注册并创建仓库且登陆了docker仓库。
+
+# docker rmi JXid                         ### 删除1个镜像，也可JXname
+# docker rm RQid                          ### 删除1个容器
+
+# docker logs RQid                        ### 查看容器输出
+
+
+
+
+
+
+
+
+
