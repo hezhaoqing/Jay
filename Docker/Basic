@@ -20,9 +20,12 @@ docker官方仓库：https://hub.docker.com/
 # docker info                             ### 查看docker状态信息
 # docker ps                               ### 查看正在运行的容器的列表
 # docker ps -a                            ### 列出所有容器
+# docker ps -a -q                         ### 列出所有容器的RQid
 # docker ps -l                            ### 列出最后一次运行的容器
 
-# docker run -i -t ubuntu bash            ### 从镜像创建一个新容器并启动，-t 让Docker分配一个伪终端并绑定到容器的标准输入上，-i 容器的标准输入保持打开开
+# docker search jenkins                   ### 查找镜像
+
+# docker run -i -t ubuntu bash            ### 从镜像创建一个新容器并启动，-t分配伪终端并绑定到容器标准输入，-i容器标准输入保持打开，-d后台运行
 # docker start RQid                       ### 启动一个停止的容器。同理有stop、restart。
 
 # docker pull ubuntu:12.04                ### 拉取一个ubuntu镜像，相当于docker pull registry.hub.docker.com/ubuntu:12.04
@@ -36,15 +39,20 @@ docker官方仓库：https://hub.docker.com/
 # docker login --username=yourhubusername --email=yourmail@xxx.com
 # docker push my_image:latest             ### 把制作的镜像推到docker仓库，前提是注册并创建仓库且登陆了docker仓库。
 
-# docker rmi JXid                         ### 删除1个镜像，也可JXname
-# docker rm RQid                          ### 删除1个容器
+# docker rmi JXid                         ### 删除1个镜像，也可JXname. 注意：在删除1个镜像前必须要删除掉所有依赖于这个镜像的所有容器。
+                                              docker rmi $(docker images -q -f "dangling=true")
+# docker rm RQid                          ### 删除1个容器，删除一个运行中的容器需要加-f参数。
+                                              docker rm $(docker ps -a -q)会删掉所有未运行的容器
 
 # docker logs RQid                        ### 查看容器输出
 
+# docker save -o ubuntu.tar ubuntu:12.04  ### 导出，把镜像保存为本地文件
+# docker load --input ubuntu.tar          ### 导入，从文件导入一个镜像，另:# docker load < ubuntu.tar
+# docker export RQid                      ### 导出，把容器保存为快照
+# docker import RQKZ                      ### 导入，从快照导入为镜像。
 
-
-
-
+# docker attach RQid                      ### 进入容器进行操作.前提是容器is running
+# docker exec -it RQid whoami             ### 指定容器执行指定命令。前提同上
 
 
 
