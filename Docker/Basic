@@ -54,6 +54,23 @@ docker官方仓库：https://hub.docker.com/
 # docker attach RQid                      ### 进入容器进行操作.前提是容器is running
 # docker exec -it RQid whoami             ### 指定容器执行指定命令。前提同上
 
+# docker inspect --format "{{.State.Pid}}" RQname
+  JCnum                                   ### 获取容器的进程号
+# nsenter --target 进程号 --mount --uts --ipc --net --pid
+                                          ### 进入容器
+
+# docker run -d -P --name my_nginx nginx  ### 大写P代表容器端口随机映射宿主机端口
+# docker run -d -p 666:80 nginx           ### 小写p代表指定 宿主机端口：容器端口
+
+
+
+
+
+
+
+
+
+
 
 
 
