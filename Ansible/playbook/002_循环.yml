@@ -1,0 +1,12 @@
+- name: used to test
+  hosts: 10.10.58.225
+  remote_user: root
+  gather_facts: false
+  vars: 
+    kafka_log: "/data1/kafka-logs,/data2/kafka-logs,/data3/kafka-logs"                
+    
+  tasks:
+  - name: create the unified dir
+    file: path="{{ item }}" state=directory mode=0755 owner=root group=root
+    with_items:
+      - "{{ kafka_log.split(',') }}"
