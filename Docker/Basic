@@ -52,7 +52,8 @@ docker官方仓库：https://hub.docker.com/
 # docker import RQKZ                      ### 导入，从快照导入为镜像。
 
 # docker attach RQid                      ### 进入容器进行操作.前提是容器is running
-# docker exec -it RQid whoami             ### 指定容器执行指定命令。前提同上
+# docker exec RQid whoami                 ### 指定容器执行指定命令。前提同上
+# docker exec -it RQid whoami             ### 进入容器执行指定命令。前提同上
 
 # docker inspect --format "{{.State.Pid}}" RQname
   JCnum                                   ### 获取容器的进程号
