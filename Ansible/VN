@@ -1,0 +1,49 @@
+1./etc/ansible/hosts
+[dbserver]
+172.23.13.21 ansible_user=sgxxx ansible_port=xxx22
+
+[gameserver]
+172.23.13.22 ansible_user=sgxxx ansible_port=xxx22
+
+[all]
+172.23.13.21 ansible_user=sgxxx ansible_port=xxx22
+172.23.13.22 ansible_user=sgxxx ansible_port=xxx22
+
+
+
+2./etc/sudoers
+sg186                           ALL=(ALL)   NOPASSWD:ALL
+
+
+
+3.ansible xxx -s -m shell -a "xxx"
+[root@sg186_1359_SVR240_vm pythonscripts]# cat startgameserver_all.py 
+#!/bin/env python
+# -*- coding: utf_8 -*-
+
+from  conf import *
+from threading import Thread
+import os
+import time
+
+
+#print info['host']['dbserver']['a_mix_02']
+ 
+
+def threaddo(hostip,userid):
+        ansibledo = "ansible %s -s -m shell -a \" su - %s -c ' cd /home/%s/; bash do.sh alla  ' \"     "        % (hostip, userid, userid)
+        print ansibledo
+
+        os.system(ansibledo)
+
+def main():
+        for (userid,hostip) in info['host']['gameserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid))
+                userid.start()
+                #time.sleep(1)
+
+
+if __name__=="__main__": 
+        main()
