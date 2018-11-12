@@ -1,0 +1,9 @@
+[dbserver]
+172.23.13.21 ansible_user=sgxxx ansible_port=xxx22
+
+[gameserver]
+172.23.13.22 ansible_user=sgxxx ansible_port=xxx22
+
+[all]
+172.23.13.21 ansible_user=sgxxx ansible_port=xxx22
+172.23.13.22 ansible_user=sgxxx ansible_port=xxx22
