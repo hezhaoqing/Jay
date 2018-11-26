@@ -1,0 +1,107 @@
+#!/bin/env python
+# -*- coding: utf_8 -*-
+#单线程 同步执行
+
+from  conf import *
+from threading import Thread
+import os
+import sys
+
+def main():
+        for (userid,hostip) in info['host']['gameserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+                ansibledo1 = "ansible %s -m shell -a \" rm -rf /home/%s/packet/* \"     "       % (hostip, userid)
+                ansibledo2 = "ansible %s -m copy -a \"src=/data/shellscripts/file/packet/%s  dest=/home/%s/packet/ owner=%s group=%s mode='u=rwx,g=rwx,o=rwx' \"  "     % (hostip, zipfile, userid, userid, userid)
+
+                print ansibledo1
+                os.system(ansibledo1)
+
+                print ansibledo2
+                os.system(ansibledo2)
+
+        for (userid,hostip) in info['host']['dbserver'].items():
+                ansibledo1 = "ansible %s -m shell -a \" rm -rf /home/%s/packet/* \"     "       % (hostip, userid)
+                ansibledo2 = "ansible %s -m copy -a \"src=/data/shellscripts/file/packet/%s  dest=/home/%s/packet/ owner=%s group=%s mode='u=rwx,g=rwx,o=rwx' \"  "     % (hostip, zipfile, userid, userid, userid)
+
+                print ansibledo1
+                os.system(ansibledo1)
+
+                print ansibledo2
+                os.system(ansibledo2)
+
+        for (userid,hostip) in info['host']['combatserver'].items():
+                ansibledo1 = "ansible %s -m shell -a \" rm -rf /home/%s/packet/* \"     "       % (hostip, userid)
+                ansibledo2 = "ansible %s -m copy -a \"src=/data/shellscripts/file/packet/%s  dest=/home/%s/packet/ owner=%s group=%s mode='u=rwx,g=rwx,o=rwx' \"  "     % (hostip, zipfile, userid, userid, userid)
+
+                print ansibledo1
+                os.system(ansibledo1)
+
+                print ansibledo2
+                os.system(ansibledo2)
+
+        for (userid,hostip) in info['host']['worldserver'].items():
+                ansibledo1 = "ansible %s -m shell -a \" rm -rf /home/%s/packet/* \"     "       % (hostip, userid)
+                ansibledo2 = "ansible %s -m copy -a \"src=/data/shellscripts/file/packet/%s  dest=/home/%s/packet/ owner=%s group=%s mode='u=rwx,g=rwx,o=rwx' \"  "     % (hostip, zipfile, userid, userid, userid)
+
+                print ansibledo1
+                os.system(ansibledo1)
+
+                print ansibledo2
+                os.system(ansibledo2)
+
+if __name__=="__main__": 
+        zipfile = sys.argv[1]
+        #print zipfile
+        main()
+               
+****************************************************************************************************************************
+****************************************************************************************************************************
+
+#!/bin/env python
+# -*- coding: utf_8 -*-
+#多线程 异步执行
+
+from  conf import *
+from threading import Thread
+import os
+import sys
+
+def threaddo(hostip,userid,zipfile):
+        ansibledo1 = "ansible %s -m shell -a \" rm -rf /home/%s/packet/* \"     "       % (hostip, userid)
+        ansibledo2 = "ansible %s -m copy -a \"src=/data/shellscripts/file/packet/%s  dest=/home/%s/packet/ owner=%s group=%s mode='u=rwx,g=rwx,o=rwx' \"  "     % (hostip, zipfile, userid, userid, userid)
+
+        print ansibledo1
+        os.system(ansibledo1)
+
+        print ansibledo2
+        os.system(ansibledo2)
+
+def main():
+        for (userid,hostip) in info['host']['gameserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid,zipfile))
+                userid.start()
+
+        for (userid,hostip) in info['host']['dbserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid,zipfile))
+                userid.start()
+
+        for (userid,hostip) in info['host']['combatserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid,zipfile))
+                userid.start()
+
+        for (userid,hostip) in info['host']['worldserver'].items():
+                #print "userid: " + userid + ", hostip: " + hostip
+
+                userid = Thread(target=threaddo,args=(hostip,userid,zipfile))
+                userid.start()
+
+if __name__=="__main__": 
+        zipfile = sys.argv[1]
+        #print zipfile
+        main()
