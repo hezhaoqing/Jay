@@ -1,0 +1,38 @@
+为什么不是直接用urllib2.Request()去访问一个页面，而要构建一个opener呢？
+构建opener的作用主要是构建一个带账号密码等cookie信息的请求去访问一个需要登录的页面，并不单单是访问一个游客形式的URL
+
+
+# -*- coding:utf-8 -*-
+import urllib
+import urllib2
+import cookielib
+import re
+
+class SDU:
+ 
+    def __init__(self):
+        #登录URL
+        self.loginUrl = 'http://jwxt.sdu.edu.cn:7890/pls/wwwbks/bks_login2.login'
+        #本学期成绩URL
+        self.gradeUrl = 'http://jwxt.sdu.edu.cn:7890/pls/wwwbks/bkscjcx.curscopre'
+        self.cookies = cookielib.CookieJar()
+        self.postdata = urllib.urlencode({
+            'stuid':'201200131012',
+            'pwd':'xxxxxx'
+         })
+        #构建opener
+        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookies))
+ 
+    #获取本学期成绩页面
+    def getPage(self):
+        request  = urllib2.Request(
+            url = self.loginUrl,
+            data = self.postdata)
+        result = self.opener.open(request)           ### 用构建好的opener打开一个需要登陆的页面
+        result = self.opener.open(self.gradeUrl)     ### 再用构建好的opener才能访问到一个登录成功之后才能跳转展示的页面
+        #打印登录内容
+        print result.read().decode('gbk')
+ 
+ 
+sdu = SDU()
+sdu.getPage()
