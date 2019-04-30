@@ -1,0 +1,6 @@
+获取CPU的信息：
+>>> psutil.cpu_count() # CPU逻辑数量
+4
+>>> psutil.cpu_count(logical=False) # CPU物理核心
+2
+
