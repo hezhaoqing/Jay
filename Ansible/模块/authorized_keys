@@ -1,0 +1,10 @@
+1.分发root公钥给被管理机（need rootMM）
+ansible all -m authorized_key -a "user=root state=present key=\"{{ lookup('file', '/root/.ssh/id_rsa.pub') }} \"" -k
+
+
+2.分发普通用户公钥 给普通用户(need rootMM)
+ansible all -m authorized_key -a "user=app01 state=present key=\"{{ lookup('file', '/home/jenkins/.ssh/id_rsa.pub') }} \"" -k
+
+
+
+
