@@ -20,13 +20,13 @@ import sys
 f1 = "/tmp/result.xlsx"
 wb = Workbook(r'f1')
 ws = wb.create_sheet('Sheet1')
-shelldo = "cat /etc/passwd | awk -F\: '{print \$1\"-\"\$3\"-\"\$5\"-\"\$6\"-\"\$7}' > users.txt"
+shelldo = "cat /etc/passwd | awk -F\: '{print \$1\":\"\$3\":\"\$5\":\"\$6\":\"\$7}' > users.txt"   ##存在systemd-network这样的用户，所以-替换为：
 
 os.chdir('/tmp/')
 os.system(shelldo)
 
 with open('users.txt', 'r') as f:
-        content = f.read().replace('-', '\t')
+        content = f.read().replace(':', '\t')
         lines = content.split('\n')
         for line in lines:
                 item = line.split('\t')
